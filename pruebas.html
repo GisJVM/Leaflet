@@ -1,0 +1,107 @@
+<html lang="es">
+
+<head>
+    <title>Leaflet taller</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="autor" />
+    <meta name="description" content="descripción página">
+    <meta name="robots" content="index,follow">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://calvinmetcalf.github.io/leaflet-ajax/dist/leaflet.ajax.js"></script>
+
+
+    <style>
+        #mapAqui {
+            height: 600px;
+            background: #4c4c4c;
+        }
+
+        #popUp {
+            background: red;
+            height: 200px;
+            ;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background: red;
+        }
+    </style>
+    <script>
+        var map, capa;
+        function iniciarmapa() {
+            map = L.map('mapAqui', {
+                center: [41.40288966232697, 2.198766893752577],
+                zoom: 15
+            });
+            capa = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                maxZoom: 19,
+                minZoom: 1,
+                attribution: 'OSM'
+            });
+            var iconDefault = L.icon({
+                iconUrl: 'image/icoAzul.png'
+            })
+            var iconDinamic = L.icon({
+                iconUrl: 'image/icoPlomo.png'
+            })
+            var iconDinamic2 = L.icon({
+                iconUrl: 'image/icoVioleta.png'
+            })
+            var marcas2 = function (feature, latlng) {
+                marcas = L.marker(latlng, {
+                    title: "hola",
+                    icon: iconDefault
+                });
+                return marcas
+            };
+
+            /*var baresPoblenou = new L.GeoJSON.AJAX('data/farmacias.geojson', {
+                maxZoom: 19,
+                minZoom: 14,
+                onEachFeature: function (feature, layer) {
+                    popupContent = "<div id = popUp><b>" + feature.properties.NOM + "</b><br>" + feature.properties.CARRCADAST + " " + feature.properties.DOORNUM + "</b></div>";
+                    layer.bindPopup(popupContent);
+                },
+                pointToLayer: marcas2
+            }).addTo(map)
+
+            baresPoblenou.on('mouseover', function (feature) {
+                feature.sourceTarget.setIcon(iconDinamic);
+            });
+            baresPoblenou.on('mouseout', function (feature) {
+                feature.sourceTarget.setIcon(iconDefault);
+            });
+            baresPoblenou.on('mousedown', function (feature) {
+                feature.sourceTarget.setIcon(iconDinamic2);
+            });
+            baresPoblenou.on('mouseup', function (feature) {
+                feature.sourceTarget.setIcon(iconDe);
+            });*/
+
+
+
+            capa.addTo(map)
+            L.Routing.control({
+                waypoints: [
+                    L.latLng(41.40288966232697, 2.198766893752577),
+                    L.latLng(41.50288966232697, 2.2)
+                ]
+            }).addTo(map);
+        }
+    </script>
+</head>
+
+<body onload='iniciarmapa()'>
+    <div id="mapAqui"></div>
+
+</body>
+
+</html>
