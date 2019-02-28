@@ -12,11 +12,14 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
 
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
     <script src="https://calvinmetcalf.github.io/leaflet-ajax/dist/leaflet.ajax.js"></script>
-
+    <link rel="stylesheet" href="css/MarkerCluster.css">
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+    <script src="js/leaflet.markercluster-src.js"></script>
+    <script type="text/javascript" src="farmacias.js"></script>
 
     <style>
         #mapAqui {
@@ -34,7 +37,7 @@
             background: red;
         }
     </style>
-    <script>
+    <script type="text/javascript">
         var map, capa;
         function iniciarmapa() {
             map = L.map('mapAqui', {
@@ -55,15 +58,32 @@
             var iconDinamic2 = L.icon({
                 iconUrl: 'image/icoVioleta.png'
             })
-            var marcas2 = function (feature, latlng) {
+
+            var markers = L.markerClusterGroup();
+            baresPoblenou2 = new L.GeoJSON.AJAX('data/farmacias.geojson', {
+                maxZoom: 19,
+                minZoom: 14,
+                pointToLayer: function (feature, latlng) {
+                    var title = feature.properties.NOM;
+                    var marker = L.marker(latlng, {
+                        title: title
+                    });
+                    marker.bindPopup(title);
+                    markers.addLayer(marker);
+                    return
+                },
+            });
+
+            map.addLayer(markers);
+            /*var marcas2 = function (feature, latlng) {
                 marcas = L.marker(latlng, {
                     title: "hola",
                     icon: iconDefault
                 });
                 return marcas
-            };
+            };*/
 
-            /*var baresPoblenou = new L.GeoJSON.AJAX('data/farmacias.geojson', {
+           /*var baresPoblenou = L.geoJson(farmacias, {
                 maxZoom: 19,
                 minZoom: 14,
                 onEachFeature: function (feature, layer) {
@@ -71,9 +91,10 @@
                     layer.bindPopup(popupContent);
                 },
                 pointToLayer: marcas2
-            }).addTo(map)
+            }).addTo(map)*/
+            
 
-            baresPoblenou.on('mouseover', function (feature) {
+            /*baresPoblenou.on('mouseover', function (feature) {
                 feature.sourceTarget.setIcon(iconDinamic);
             });
             baresPoblenou.on('mouseout', function (feature) {
@@ -84,17 +105,17 @@
             });
             baresPoblenou.on('mouseup', function (feature) {
                 feature.sourceTarget.setIcon(iconDe);
-            });*/
+            });
+            var eye1 = new L.Marker(new L.LatLng(41.40288966232697, 2.2));
+            var eye2 = new L.Marker(new L.LatLng(41.4, 2.25));
+            var markers = L.markerClusterGroup();
+            markers.addLayer(baresPoblenou);      
 
+            map.addLayer(markers);*/
 
+            capa.addTo(map);
+            //L.geoJson(farmacias).addTo(map);
 
-            capa.addTo(map)
-            L.Routing.control({
-                waypoints: [
-                    L.latLng(41.40288966232697, 2.198766893752577),
-                    L.latLng(41.50288966232697, 2.2)
-                ]
-            }).addTo(map);
         }
     </script>
 </head>

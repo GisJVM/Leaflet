@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Leaflet taller</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="autor" />
+    <meta name="description" content="descripción página">
+    <meta name="robots" content="index,follow">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://calvinmetcalf.github.io/leaflet-ajax/dist/leaflet.ajax.js"></script>
+    <link rel="stylesheet" href="css/MarkerCluster.css">
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+    <script src="js/leaflet.markercluster-src.js"></script>
+    <script type="text/javascript" src="data/farmacias.js"></script>
+    <style>
+        #mapAqui {
+            height: 600px;
+            background: #4c4c4c;
+        }
+    </style>
+    <script type="text/javascript">
+        function iniciarMapa() {
+            var map = L.map('mapAqui', { center: [41.40288966232697, 2.198766893752577], zoom: 10 });
+            var capa = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18 }).addTo(map);
+            var myStyle = {
+                "color": "#ff7800",
+                "weight": 5,
+                "opacity": 0.65
+            };
+            var iconDefault = L.icon({
+                iconUrl: 'image/icoAzul.png'
+            })
+            var iconDinamic = L.icon({
+                iconUrl: 'image/icoPlomo.png'
+            })
+            var iconDinamic2 = L.icon({
+                iconUrl: 'image/icoVioleta.png'
+            })
+
+            var marcadoresGeojson = L.geoJson(farmacias, {
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, {
+                        icon: iconDefault
+                    })
+                }
+            }).addTo(map);
+            marcadoresGeojson.on('mouseover', function (feature) {
+                feature.sourceTarget.setIcon(iconDinamic);
+            });
+            marcadoresGeojson.on('mouseout', function (feature) {
+                feature.sourceTarget.setIcon(iconDefault);
+            });
+            marcadoresGeojson.on('mousedown', function (feature) {
+                feature.sourceTarget.setIcon(iconDinamic2);
+            });
+            marcadoresGeojson.on('mouseup', function (feature) {
+                feature.sourceTarget.setIcon(iconDinamic);
+            });
+
+            var markers = L.markerClusterGroup();
+            markers.addLayer(marcadoresGeojson);
+            map.addLayer(markers)
+        }//fin del iniciarMapa
+
+    </script>
+
+</head>
+
+<body onload='iniciarMapa()'>
+    <div id="mapAqui"></div>
+</body>
+
+</html>

@@ -28,14 +28,22 @@
         latlng = L.latLng(41.40288966232697, 2.198766893752577);
 
       var map = L.map('mapAqui', { center: latlng, zoom: 13, layers: [tiles] });
-      baresPoblenou = [];
-      baresPoblenou.push({ lat: 41.40288966232697, lng: 2.198766893752577, bar: 'Xorus', id: 'ChIJ0UGVLDyjpBIRdNcVCTidgPs', img: 'image/xorus.jpg', descp: 'HolaPhasellus finibus interdum aliquam. Nulla dignissim turpis id diam suscipit pellentesque. Pellentesque neque diam, laoreet eu arcu quis, porttitor convallis nisl. Donec sed hendrerit purus, sed euismod sem.<br>  Aenean sagittis dictum nibh, at rutrum lacus semper eget.', face: 'https://www.facebook.com/Xorus/', fono: '603 307 117', address: 'calle granada 90', web: 'xorus.html' });
-      baresPoblenou.push({ lat: 41.3983979113559, lng: 2.204631508368948, bar: 'Blue Bar', id: 'ChIJpa-3z2qjpBIRUW4SwqLY7mk', img: 'image/bluebar.jpg', descp: 'Phasellus finibus interdum aliquam. Nulla dignissim turpis id diam suscipit pellentesque. Pellentesque neque diam, laoreet eu arcu quis, porttitor convallis nisl. Donec sed hendrerit purus, sed euismod sem. Aenean sagittis dictum nibh, at rutrum lacus semper eget.', face: 'https://www.facebook.com/bluebar/', fono: '93 280 90 59', address: ' Pallars, 122', web: '' });
-      baresPoblenou.push({ lat: 41.39684988162788, lng: 2.192088531196873, bar: 'D9', id: 'ChIJnVDdoRmjpBIR8Ra7Fpj8nxE', img: 'image/d9.jpg', descp: 'Phasellus finibus interdum aliquam. Nulla dignissim turpis id diam suscipit pellentesque. Pellentesque neque diam, laoreet eu arcu quis, porttitor convallis nisl. Donec sed hendrerit purus, sed euismod sem. Aenean sagittis dictum nibh, at rutrum lacus semper eget.', face: 'https://www.facebook.com/LaTavernicola/', fono: '93 667 74 54', address: 'Rambla de Poblenou 44-46', web: '' });
-      baresPoblenou.push({ lat: 41.400050872923345, lng: 2.2028905449215017, bar: 'El Tío Ché', id: 'ChIJxxFIXhWjpBIRv6GISCWyg3k', img: 'image/tioche.jpg', descp: 'Phasellus finibus interdum aliquam. Nulla dignissim turpis id diam suscipit pellentesque. Pellentesque neque diam, laoreet eu arcu quis, porttitor convallis nisl. Donec sed hendrerit purus, sed euismod sem. Aenean sagittis dictum nibh, at rutrum lacus semper eget.', face: 'https://www.facebook.com/eltioche/', fono: '93 485 45 63', address: 'Roc boronat 70', web: 'eltioche.html' });
-      baresPoblenou.push({ lat: 41.400315323140894, lng: 2.197856248397329, bar: 'La Tavernicola', id: 'ChIJk7Fa9T2jpBIRdqE3OM-I1OE', img: 'image/tavernicola.jpg', descp: 'Phasellus finibus interdum aliquam. Nulla dignissim turpis id diam suscipit pellentesque. Pellentesque neque diam, laoreet eu arcu quis, porttitor convallis nisl. Donec sed hendrerit purus, sed euismod sem. Aenean sagittis dictum nibh, at rutrum lacus semper eget.', face: 'https://www.facebook.com/LaTavernicola/', fono: '93 300 27 19', address: ' Pujades, 187', web: '' });
-      baresPoblenou.push({ lat: 41.39421498232687, lng: 2.1902336778967992, bar: 'VAN VAN VAR', id: 'ChIJF5JJ6xujpBIRBzATAsctpzo', img: 'image/vanvan.jpg', descp: 'Phasellus finibus interdum aliquam. Nulla dignissim turpis id diam suscipit pellentesque. Pellentesque neque diam, laoreet eu arcu quis, porttitor convallis nisl. Donec sed hendrerit purus, sed euismod sem. Aenean sagittis dictum nibh, at rutrum lacus semper eget.', face: 'https://www.facebook.com/vanvanbar/', fono: '93 280 90 59', address: 'c/ Pujades, 27', web: '' });
+      var markers = L.markerClusterGroup();
+            baresPoblenou2 = new L.GeoJSON.AJAX('data/farmacias.geojson', {
+                maxZoom: 19,
+                minZoom: 14,
+                pointToLayer: function (feature, latlng) {
+                    var title = feature.properties.NOM;
+                    var marker = L.marker(latlng, {
+                        title: title
+                    });
+                    marker.bindPopup(title);
+                    markers.addLayer(marker);
+                    return
+                },
+            });
 
+            map.addLayer(markers);
       var iconDefault = L.icon({
         iconUrl: 'image/icoAzul.png'
       })
