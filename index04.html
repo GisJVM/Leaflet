@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Leaflet taller</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="autor" />
+    <meta name="description" content="descripción página">
+    <meta name="robots" content="index,follow">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="css/MarkerCluster.css">
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+    <script src="js/leaflet.markercluster-src.js"></script>
+    <script type="text/javascript" src="data/farmacias.js"></script>
+    <style>
+        #mapAqui {
+            height: 600px;
+            background: #4c4c4c;
+        }
+    </style>
+    <script type="text/javascript">
+        function iniciarMapa() {
+            var map = L.map('mapAqui', { center: [41.40288966232697, 2.198766893752577], zoom: 10 });
+            var capa = L.tileLayer('https://api.mapbox.com/styles/v1/jaimevsm/cjsokn3zb15ay1fl35f3ezoky/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamFpbWV2c20iLCJhIjoiY2lnYXhuc2ozMWxmZXY3bTN6bjg3ZzV2MSJ9.JWiLnzM_xTP1OTe_laDs2Q#10.0/42.362400/-71.020000/0', { maxZoom: 18, attribution: 'Mapbox' }).addTo(map); //se agrega tiles/256/{z}/{x}/{y}@2x? despues del codigo ...3ezoky hasta acces token
+            
+            var iconDefault = L.icon({
+                iconUrl: 'image/icoAzul.png'
+            })
+            var iconDinamic = L.icon({
+                iconUrl: 'image/icoPlomo.png'
+            })
+            var iconDinamic2 = L.icon({
+                iconUrl: 'image/icoVioleta.png'
+            })
+
+            var marcadoresGeojson = L.geoJson(farmacias, {
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, {
+                        icon: iconDefault
+                    })
+                }
+            });
+            marcadoresGeojson.on('mouseover', function (feature) {
+                feature.sourceTarget.setIcon(iconDinamic2);
+            });
+            marcadoresGeojson.on('mouseout', function (feature) {
+                feature.sourceTarget.setIcon(iconDefault);
+            });
+            marcadoresGeojson.on('mousedown', function (feature) {
+                feature.sourceTarget.setIcon(iconDinamic);
+            });
+            marcadoresGeojson.on('mouseup', function (feature) {
+                feature.sourceTarget.setIcon(iconDinamic);
+            });
+
+            var markers = L.markerClusterGroup({
+                animateAddingMarkers: false,
+                showCoverageOnHover :  false,
+                zoomToBoundsOnClick :  true
+            });
+            markers.addLayer(marcadoresGeojson);
+            map.addLayer(markers)
+        }//fin del iniciarMapa
+
+    </script>
+
+</head>
+
+<body onload='iniciarMapa()'>
+    <div id="mapAqui"></div>
+    <div id="sidebar" class="sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+                <li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
+                <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li>
+                <li><a href="https://github.com/Turbo87/sidebar-v2" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>
+            </ul>
+
+            <ul role="tablist">
+                <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+            </ul>
+        </div>
+
+        <!-- Tab panes -->
+        <div class="sidebar-content">
+            <div class="sidebar-pane" id="home">
+                <h1 class="sidebar-header">
+                    sidebar-v2
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+
+                <p>A responsive sidebar for mapping libraries like <a href="http://leafletjs.com/">Leaflet</a> or <a href="http://openlayers.org/">OpenLayers</a>.</p>
+
+                <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+                <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+                <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+                <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </div>
+
+            <div class="sidebar-pane" id="profile">
+                <h1 class="sidebar-header">Profile<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            </div>
+
+            <div class="sidebar-pane" id="messages">
+                <h1 class="sidebar-header">Messages<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            </div>
+
+            <div class="sidebar-pane" id="settings">
+                <h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            </div>
+        </div>
+    </div>
+
+    <div id="map" class="sidebar-map"></div>
+</body>
+
+</html>
