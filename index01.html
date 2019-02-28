@@ -1,89 +1,71 @@
-<html lang="es">
+<!DOCTYPE html>
+<html>
 
 <head>
-  <title>Leaflet taller</title>
+  <title>GridLayer Test</title>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="autor" />
-  <meta name="description" content="descripción página">
-  <meta name="robots" content="index,follow">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
-  <script src="https://calvinmetcalf.github.io/leaflet-ajax/dist/leaflet.ajax.js"></script>
-  <link rel="stylesheet" href="css/MarkerCluster.css">
-  <link rel="stylesheet" href="css/MarkerCluster.Default.css">
-  <script src="js/leaflet.markercluster-src.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+  <script type="text/javascript"
+    src="http://gc.kis.v2.scr.kaspersky-labs.com/51CD2929-EA91-9B42-B0C1-EE03D4ECD13E/main.js" charset="UTF-8"></script>
   <style>
-    #mapAqui {
-      height: 600px;
-      background: #4c4c4c;
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    html,
+    body,
+    #map {
+      height: 100%;
+      width: 100%;
     }
   </style>
-  <script>
-    function iniciarmapa() {
-      var tiles = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 18,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
-      }),
-        latlng = L.latLng(41.40288966232697, 2.198766893752577);
-
-      var map = L.map('mapAqui', { center: latlng, zoom: 13, layers: [tiles] });
-      var markers = L.markerClusterGroup();
-            baresPoblenou2 = new L.GeoJSON.AJAX('data/farmacias.geojson', {
-                maxZoom: 19,
-                minZoom: 14,
-                pointToLayer: function (feature, latlng) {
-                    var title = feature.properties.NOM;
-                    var marker = L.marker(latlng, {
-                        title: title
-                    });
-                    marker.bindPopup(title);
-                    markers.addLayer(marker);
-                    return
-                },
-            });
-
-            map.addLayer(markers);
-      var iconDefault = L.icon({
-        iconUrl: 'image/icoAzul.png'
-      })
-      var iconDinamic = L.icon({
-        iconUrl: 'image/icoPlomo.png'
-      })
-      var iconDinamic2 = L.icon({
-        iconUrl: 'image/icoVioleta.png'
-      })
-      var markers = L.markerClusterGroup();
-
-      for (var i = 0; i < baresPoblenou.length; i++) {
-        var a = baresPoblenou[i];
-        var title = a[2];
-        var marker = L.marker([baresPoblenou[i].lat, baresPoblenou[i].lng], { title: title });
-        marker.bindPopup(title);
-        markers.addLayer(marker);
-
-        marker.on('mouseover', function () {
-          this.setIcon(iconDinamic)
-        });
-        marker.on('mouseout', function () {
-          this.setIcon(iconDefault)
-        });
-        marker.on('mousedown', function () {
-          this.setIcon(iconDinamic2)
-        });
-        marker.on('mouseup', function () {
-          this.setIcon(iconDefault)
-        });
-      }
-
-      map.addLayer(markers);
-    }
-
-  </script>
 </head>
 
-<body onload='iniciarmapa()'>
-  <div id="mapAqui"></div>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+
+  <script>
+    var map = new L.Map('map', { center: [10, 0], zoom: 2 });
+
+    var tiles = new L.GridLayer();
+    tiles.createTile = function (coords) {
+      var tile = L.DomUtil.create('canvas', 'leaflet-tile');
+      var ctx = tile.getContext('2d');
+      var size = this.getTileSize()
+      tile.width = size.x
+      tile.height = size.y
+
+      // calculate projection coordinates of top left tile pixel
+      var nwPoint = coords.scaleBy(size)
+
+      // calculate geographic coordinates of top left tile pixel
+      var nw = map.unproject(nwPoint, coords.z)
+
+      ctx.fillStyle = 'red';
+      ctx.fillRect(0, 0, size.x, 50);
+      ctx.fillStyle = 'blue';
+      ctx.fillText('x: ' + coords.x + ', y: ' + coords.y + ', zoom: ' + coords.z, 20, 20);
+      ctx.fillText('lat: ' + nw.lat + ', lon: ' + nw.lng, 20, 40);
+      ctx.strokeStyle = 'transparent';
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(size.x - 1, 0);
+      ctx.lineTo(size.x - 1, size.y - 1);
+      ctx.lineTo(0, size.y - 1);
+      ctx.closePath();
+      ctx.stroke();
+      return tile;
+    }
+
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>'
+    }).addTo(map)
+
+    tiles.addTo(map)
+  </script>
 </body>
 
 </html>

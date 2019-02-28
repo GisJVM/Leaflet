@@ -1,5 +1,6 @@
 var farmacias ={
 "type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
 { "type": "Feature", "properties": {  "NOM": "Puigoriol Farmacia", "CARRCADAST": "CL MALLORCA", "DOORNUM": "312", "Cbarri": "7", "NBarri": "la Dreta de l'Eixample", "Cdistri": "2", "NDistric": "Eixample", "RCNUMBER": "0433701DF3803C", "DATAINICI": "2011-09-30", "ULTIMA VIS": "04\/02\/2014", "x": "430490.0", "y": "4583406.0", "UTM_X": "430490", "UTM_Y": "4583406" }, "geometry": { "type": "Point", "coordinates": [ 2.16738, 41.39737 ] } },
 { "type": "Feature", "properties": {  "NOM": "Farmacia", "CARRCADAST": "GV CORTS CATALANES", "DOORNUM": "424", "Cbarri": "10", "NBarri": "Sant Antoni", "Cdistri": "2", "NDistric": "Eixample", "RCNUMBER": "9211629DF2891A", "DATAINICI": "2011-07-11", "ULTIMA VIS": "25\/03\/2014", "x": "429253.0", "y": "4581210.0", "UTM_X": "429253", "UTM_Y": "4581210" }, "geometry": { "type": "Point", "coordinates": [ 2.15284, 41.37749 ] } },

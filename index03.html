@@ -5,14 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Barcelona</title>
+    <title>Poblenou</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
     <link rel="stylesheet" href="css/MarkerCluster.css">
     <link rel="stylesheet" href="css/MarkerCluster.Default.css">
     <script src="js/leaflet.markercluster-src.js"></script>
     <script type="text/javascript" src="data/farmacias.js"></script>
-    <link rel="stylesheet" href="css/leaflet-sidebar.css">
     <style>
         ul,
         ol {
@@ -230,38 +229,17 @@
             width: 100%px;
             top: 101px;
         }
-
-        #menu img {
-            position: relative;
-            top: 30px;
-            left: 10px;
-            height: 20px;
-        }
-
-        .lorem {
-            padding: 20px;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-size: 16px;
-        }
     </style>
-
+    <link rel="stylesheet" href="css/leaflet-sidebar.css">
+    <link rel="stylesheet" href="css/leaflet-sidebar.min.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/Control.MiniMap.min.css">
     <script src="js/leaflet-sidebar.js"></script>
-    <script src="js/Control.MiniMap.min.js"></script>
-
+    
     <script type="text/javascript">
         function iniciarMapa() {
             var map = L.map('mapAqui', { center: [41.40288966232697, 2.198766893752577], zoom: 12 });
             var capa = L.tileLayer('https://api.mapbox.com/styles/v1/gismasterm2/cjqg9p2lm00442rqm4vlk89rt/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZ2lzbWFzdGVybTIiLCJhIjoiY2plZHhubTQxMTNoYzMza3Rqa3kxYTdrOCJ9.53B1E6mKD_EQOVb2Y0-SsA', { maxZoom: 18, attribution: 'Mapbox' }); //se agrega tiles/256/{z}/{x}/{y}@2x? despues del codigo ...3ezoky hasta acces token
             capa.addTo(map)
-            var capa2 = new L.tileLayer('https://api.mapbox.com/styles/v1/gismasterm2/cjqg9p2lm00442rqm4vlk89rt/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZ2lzbWFzdGVybTIiLCJhIjoiY2plZHhubTQxMTNoYzMza3Rqa3kxYTdrOCJ9.53B1E6mKD_EQOVb2Y0-SsA', { 
-                minZoom: 2,
-                maxZoom: 10,
-                attribution: 'Mapbox' });
-            var miniMap = new L.Control.MiniMap(capa2, { toggleDisplay: true }).addTo(map);
-            
             var iconDefault = L.icon({
                 iconUrl: 'image/icoAzul.png'
             })
@@ -331,20 +309,17 @@
     </div>
     <div id="estructura">
         <header>
-            <a href="index.html" id="main-header">Barcelona</a>
+            <a href="index.html" id="main-header">22@POBLENOU</a>
         </header>
         <div id="seccion">
             <div id="sidebar" class="sidebar collapsed">
                 <!-- Nav tabs -->
                 <div class="sidebar-tabs">
                     <ul role="tablist">
-                        <div>
-                            <p id='menu'><img src="image/icomenu.png" alt=""></p>
-                        </div>
-                        <li><a href="#home" role="tab"><img src="" alt=""><i class="fa fa-bars"></i></a></li>
+                        <li><a href="#home" role="tab"><img src="image/ico-mail.png" alt=""><i class="fa fa-bars"></i></a></li>
                         <li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
                         <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li>
-                        <li><a href="https://github.com/GisJVM/Leaflet" role="tab" target="_blank"><i
+                        <li><a href="https://github.com/Turbo87/sidebar-v2" role="tab" target="_blank"><i
                                     class="fa fa-github"></i></a></li>
                     </ul>
 
@@ -357,58 +332,54 @@
                 <div class="sidebar-content">
                     <div class="sidebar-pane" id="home">
                         <h1 class="sidebar-header">
-                            Farmacias Barcelona
+                            sidebar-v2
                             <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
                         </h1>
-                        <p class="lorem">La Federación Empresarial de Farmacéuticos Españoles (FEFE) desarrolla, desde
-                            hace más de quince años, un ambicioso programa de formación contínua a nivel nacional
-                            dirigido al propietarios y trabajadores habituales de las Oficinas de Farmacia:</p>
 
-                        <p class="lorem">El principal objetivo de la formación contínua es actualizar y ampliar los
-                            conocimientos de los responsables de las Oficinas de Farmacia, impartiendo cursos basados en
-                            materia científica y empresarial.</p>
+                        <p>A responsive sidebar for mapping libraries like <a href="http://leafletjs.com/">Leaflet</a>
+                            or <a href="http://openlayers.org/">OpenLayers</a>.</p>
 
-                        <p class="lorem">De esta forma, los miles de farmacéuticos adscritos a la Federación Empresarial
-                            de Farmacéuticos Españoles (FEFE), a través de las asociaciones o federaciones autonómicas y
-                            provinciales, que han pasado por estos cursos pueden aplicar con éxito los conocimientos
-                            aprendidos en su Oficina de Farmacia, mejorando así el servicio prestado al paciente y
-                            perfeccionando, además, la gestión de su pequeña empresa.</p>
+                        <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+                            est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                            diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                            voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 
-                        <p class="lorem">os farmacéuticos, afiliados a la Federación Empresarial de Farmacéuticos
-                            Españoles (FEFE) mediante la adscripción a nuestras asociaciones y federaciones autonómicas
-                            y provinciales son, ante todo, profesionales sanitarios y nuestro comportamiento siempre
-                            busca aliviar la enfermedad y mejorar la calidad de vida de los pacientes y de toda la
-                            sociedad.</p>
+                        <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+                            est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                            diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                            voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+                        <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+                            est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                            diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                            voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+                        <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+                            est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                            diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                            voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
                     </div>
 
                     <div class="sidebar-pane" id="profile">
-                        <h1 class="sidebar-header">Contacto FEFE<span class="sidebar-close"><i
+                        <h1 class="sidebar-header">Profile<span class="sidebar-close"><i
                                     class="fa fa-caret-left"></i></span></h1>
-                        <p class="lorem">La Federación Empresarial de Farmacéuticos Españoles (FEFE), fundada en el 3 de
-                            febrero de 1981 al amparo de la Ley 19/1977, lleva más de tres décadas trabajando en la
-                            defensa del farmacéutico titular de Oficina de Farmacia y en pro de la mejora de la calidad
-                            de vida de los pacientes.</p>
-
-                        <p class="lorem">Desde su constitución, FEFE ha destacado por el fomento del diálogo tanto con
-                            la sociedad como con sus institución, a fin de garantizar la viabilidad y sostenibilidad
-                            económica del modelo español de Oficina de Farmacia y del sistema sanitario español en su
-                            conjunto.</p>
-
-                        <p class="lorem">FEFE es un organismo independiente de las Administraciones Públicas,
-                            corporaciones de derecho público, sociedades científicas y partidos políticos.</p>
-
-                        <p class="lorem">Si desea hacer llegar alguna comunicación a la Federación Empresarial de
-                            Farmacéticos Españoles (FEFE) puede remitir una carta postal a la dirección: Calle del
-                            Príncipe de Vergara, 8 – 3º Izda (28001) de Madrid. De igual forma, puede ponerse en
-                            contacto vía telefónica a través del 91 575 43 86 o enviando un correo electrónico a
-                            federacion@fefe.com. Si lo prefiere, puede rellenar el siguiente formulario y recibirá
-                            respuesta en el menor tiempo posible.</p>
                     </div>
 
                     <div class="sidebar-pane" id="messages">
                         <h1 class="sidebar-header">Messages<span class="sidebar-close"><i
                                     class="fa fa-caret-left"></i></span></h1>
-
                     </div>
 
                     <div class="sidebar-pane" id="settings">
@@ -418,7 +389,7 @@
                 </div>
             </div>
 
-
+            
             <div id=mapAqui class="sidebar-map"></div>
             <footer id="footer">
                 <div id="footer-text">
