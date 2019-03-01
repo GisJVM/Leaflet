@@ -1,71 +1,116 @@
-<!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
-  <title>GridLayer Test</title>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-  <script type="text/javascript"
-    src="http://gc.kis.v2.scr.kaspersky-labs.com/51CD2929-EA91-9B42-B0C1-EE03D4ECD13E/main.js" charset="UTF-8"></script>
-  <style>
-    body {
-      padding: 0;
-      margin: 0;
-    }
+    <title>Farmacias</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="autor" />
+    <meta name="description" content="descripción página">
+    <meta name="robots" content="index,follow">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <script>
+        L_PREFER_CANVAS = true;
+    </script>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://calvinmetcalf.github.io/leaflet-ajax/dist/leaflet.ajax.js"></script>
+<!-- Paso 2
+    <script src="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
+    <link rel="stylesheet" href="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css" />
+-->
 
-    html,
-    body,
-    #map {
-      height: 100%;
-      width: 100%;
-    }
-  </style>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <script>
+        var map, osm, esri;
+        var geojson, farmacias;
+        var controlCapas;
+        var controlEscala;
+
+       function Init() {
+
+            map = L.map('map', {
+                center: [41.3954, 2.16859],
+                zoom: 14
+            });
+            esri = L.tileLayer(
+                'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 17,
+                    minZoom: 1,
+                    attribution: 'Tiles © Esri',
+                }).addTo(map);
+
+            osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                minZoom: 1,
+                attribution: 'OSM'
+            });
+
+
+            farmacias = new L.GeoJSON.AJAX('datos/farmacias.geojson', {
+                maxZoom: 19,
+                minZoom: 14,
+                onEachFeature: function (feature, layer) {
+                    popupContent = "<b>" + feature.properties.NOM + "</b><br>" + feature.properties
+                        .CARRCADAST + " " + feature.properties.DOORNUM + "</b>";
+                    layer.bindPopup(popupContent);
+                },
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 6,
+                        fillColor: "#00ff00",
+                        color: "#ffffff",
+                        weight: 3,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    });
+                }
+            }).addTo(map);
+*/
+            var baseMaps = {
+                "Orto_esri": esri,
+                "Mapa_osm": osm
+            };
+/*Pas 1
+            var overlayMaps = {
+                "farmacias": farmacias
+            };
+*/
+            controlCapas = L.control.layers(baseMaps, null);
+            controlCapas.addTo(map);
+            controlEscala = L.control.scale();
+            controlEscala.addTo(map);
+
+
+/*Pas 2
+            var searchControl = new L.Control.Search({
+                layer: farmacias,
+                propertyName: 'NOM',
+                circleLocation: true,
+                moveToLocation: function (latlng) {
+
+                    map.setView(latlng, 17);
+                }
+            });
+
+            map.addControl(searchControl);
+*/
+
+        };
+    </script>
 </head>
 
-<body>
-  <div id="map"></div>
-
-  <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
-
-  <script>
-    var map = new L.Map('map', { center: [10, 0], zoom: 2 });
-
-    var tiles = new L.GridLayer();
-    tiles.createTile = function (coords) {
-      var tile = L.DomUtil.create('canvas', 'leaflet-tile');
-      var ctx = tile.getContext('2d');
-      var size = this.getTileSize()
-      tile.width = size.x
-      tile.height = size.y
-
-      // calculate projection coordinates of top left tile pixel
-      var nwPoint = coords.scaleBy(size)
-
-      // calculate geographic coordinates of top left tile pixel
-      var nw = map.unproject(nwPoint, coords.z)
-
-      ctx.fillStyle = 'red';
-      ctx.fillRect(0, 0, size.x, 50);
-      ctx.fillStyle = 'blue';
-      ctx.fillText('x: ' + coords.x + ', y: ' + coords.y + ', zoom: ' + coords.z, 20, 20);
-      ctx.fillText('lat: ' + nw.lat + ', lon: ' + nw.lng, 20, 40);
-      ctx.strokeStyle = 'transparent';
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(size.x - 1, 0);
-      ctx.lineTo(size.x - 1, size.y - 1);
-      ctx.lineTo(0, size.y - 1);
-      ctx.closePath();
-      ctx.stroke();
-      return tile;
-    }
-
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>'
-    }).addTo(map)
-
-    tiles.addTo(map)
-  </script>
+<body onload="Init()">
+    <div id="map"></div>
 </body>
 
 </html>
