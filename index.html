@@ -256,12 +256,44 @@
             var map = L.map('mapAqui', { center: [41.40288966232697, 2.198766893752577], zoom: 12 });
             var capa = L.tileLayer('https://api.mapbox.com/styles/v1/gismasterm2/cjqg9p2lm00442rqm4vlk89rt/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZ2lzbWFzdGVybTIiLCJhIjoiY2plZHhubTQxMTNoYzMza3Rqa3kxYTdrOCJ9.53B1E6mKD_EQOVb2Y0-SsA', { maxZoom: 18, attribution: 'Mapbox' }); //se agrega tiles/256/{z}/{x}/{y}@2x? despues del codigo ...3ezoky hasta acces token
             capa.addTo(map)
-            var capa2 = new L.tileLayer('https://api.mapbox.com/styles/v1/gismasterm2/cjqg9p2lm00442rqm4vlk89rt/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZ2lzbWFzdGVybTIiLCJhIjoiY2plZHhubTQxMTNoYzMza3Rqa3kxYTdrOCJ9.53B1E6mKD_EQOVb2Y0-SsA', { 
-                minZoom: 2,
-                maxZoom: 10,
-                attribution: 'Mapbox' });
+            var capa2 = new L.tileLayer('https://api.mapbox.com/styles/v1/gismasterm2/cjqg9p2lm00442rqm4vlk89rt/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZ2lzbWFzdGVybTIiLCJhIjoiY2plZHhubTQxMTNoYzMza3Rqa3kxYTdrOCJ9.53B1E6mKD_EQOVb2Y0-SsA', {
+                minZoom: 0,
+                maxZoom: 19,
+                attribution: 'Mapbox'
+            });
+            var capa3 = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+                attribution: 'OSM',
+                minZoom: 0,
+                maxZoom: 19,
+                ext: 'png'
+            });
+            var capa4 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS',
+                minZoom: 0,
+                maxZoom: 19
+            });
+            var capa5 = new L.tileLayer('https://api.mapbox.com/styles/v1/jaimevsm/cjsokn3zb15ay1fl35f3ezoky/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFpbWV2c20iLCJhIjoiY2lnYXhuc2ozMWxmZXY3bTN6bjg3ZzV2MSJ9.JWiLnzM_xTP1OTe_laDs2Q#10.0/42.362400/-71.020000/0', {
+                attribution: 'MapBox',
+                minZoom: 0,
+                maxZoom: 19
+            });
+
+            var capaBase = {
+                "Mapbox": capa5,
+                "OSM": capa3
+
+            }
+            var capaTerrain = {
+                "Imagen": capa4
+            };
+
+            var controlCapas = L.control.layers(capaBase, capaTerrain);
+            controlCapas.addTo(map);
+
             var miniMap = new L.Control.MiniMap(capa2, { toggleDisplay: true }).addTo(map);
-            
+            var controlEscala = L.control.scale({});
+            controlEscala.addTo(map);
+
             var iconDefault = L.icon({
                 iconUrl: 'image/icoAzul.png'
             })
@@ -300,6 +332,8 @@
             markers.addLayer(marcadoresGeojson);
             map.addLayer(markers);
             var sidebar = L.control.sidebar('sidebar').addTo(map);
+
+            
         }//fin del iniciarMapa
 
     </script>
