@@ -1,6 +1,6 @@
 **Farmacias de Barcelona**
 
-Se creo una mapa con todas las farmacias de la ciudad de Barcelona.
+Se creo un mapa con todas las farmacias de la ciudad de Barcelona.
 
 Al ser 1066 puntos la visualización es muy sucia, para ello se usó un plugin que agrupa los marcadores y se van mostrando según se hace zoom.
 
