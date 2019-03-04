@@ -12,12 +12,13 @@
     <link rel="stylesheet" href="css/MarkerCluster.Default.css">
     <script src="js/leaflet.markercluster-src.js"></script>
     <script type="text/javascript" src="data/farmacias.js"></script>
+    <script type="text/javascript" src="data/Wifi.js"></script>
     <link rel="stylesheet" href="css/leaflet-sidebar.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/Control.MiniMap.min.css">
     <script src="js/leaflet-sidebar.js"></script>
     <script src="js/Control.MiniMap.min.js"></script>
-    <script src="js/leaflet-heat.js"></script>
+
     <style>
         ul,
         ol {
@@ -248,13 +249,15 @@
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             font-size: 16px;
         }
-        #info-general{
+
+        #info-general {
             position: relative;
             height: 250px;
             width: 400px;
             background: #ff4040;
         }
-        #info-titulo{
+
+        #info-titulo {
             position: absolute;
             height: 40px;
             width: 380px;
@@ -262,7 +265,8 @@
             top: 10px;
             left: 10px;
         }
-        #info-descripcion{
+
+        #info-descripcion {
             position: absolute;
             height: 140px;
             width: 190px;
@@ -270,7 +274,8 @@
             top: 60px;
             left: 10px;
         }
-        #info-foto{
+
+        #info-foto {
             position: absolute;
             height: 140px;
             width: 190px;
@@ -278,7 +283,8 @@
             top: 60px;
             left: 200px;
         }
-        #info-direccion{
+
+        #info-direccion {
             position: absolute;
             height: 30px;
             width: 380px;
@@ -286,27 +292,32 @@
             top: 210px;
             left: 10px;
         }
-        #info-titulo h1{
+
+        #info-titulo h1 {
             margin: 0;
             text-align: center;
             color: rgb(3, 77, 3);
             padding: 10px;
             font-size: 20px;
         }
-        #info-descripcion p{
+
+        #info-descripcion p {
             margin: 0;
             font-size: 13px;
             padding: 5px 5px 0 5px
         }
-        #info-foto p{
+
+        #info-foto p {
             margin: 0%;
         }
-        #info-foto p img{
+
+        #info-foto p img {
             margin: 0;
             height: 140px;
             width: 190px
         }
-        #info-direccion p{
+
+        #info-direccion p {
             margin: 0;
             font-size: 14px;
             padding: 8px 2px 0 2px;
@@ -314,11 +325,14 @@
             text-align: center;
             font-weight: bold
         }
-        .leaflet-popup-content-wrapper{
+
+        .leaflet-popup-content-wrapper {
             background: #ff4040;
-           width: 435px;;
+            width: 435px;
+            ;
         }
-        .leaflet-popup-tip{
+
+        .leaflet-popup-tip {
             background: #ff4040;
         }
     </style>
@@ -348,16 +362,6 @@
                 minZoom: 0,
                 maxZoom: 19
             });//capas para escoger
-            var capaBase = {
-                "Mapbox": capa5,
-                "OSM": capa3
-            }//mapa base del layer
-            var capaTerrain = {
-                "Imagen": capa4
-            };//mapa base del layer
-
-            var controlCapas = L.control.layers(capaBase, capaTerrain);
-            controlCapas.addTo(map);//control de layers
 
             var miniMap = new L.Control.MiniMap(capa2, { toggleDisplay: true }).addTo(map);
             var controlEscala = L.control.scale({});
@@ -379,13 +383,26 @@
                         icon: iconDefault
                     })//se agrega los markers
                 },
-                onEachFeature: function (feature, layer){
-                    popupContent = '<div id="info-general"> <div id="info-titulo"> <h1>'+feature.properties.NOM+'</h1> </div> <div id="info-descripcion"> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dolore ullam eum corporis labore assumenda, earum excepturi deserunt modi aliquid architecto consequatur sint rerum aliquam quibusdam cum ratione! Quidem, dignissimos!</p></div> <div id="info-foto"> <p><img src="image/farmacia.jpg" alt=""></p></div> <div id="info-direccion"> <p>'+feature.properties.CARRCADAST+' '+feature.properties.DOORNUM+', '+feature.properties.NBarri+'</p> </div> </div>';
+                onEachFeature: function (feature, layer) {
+                    popupContent = '<div id="info-general"> <div id="info-titulo"> <h1>' + feature.properties.NOM + '</h1> </div> <div id="info-descripcion"> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dolore ullam eum corporis labore assumenda, earum excepturi deserunt modi aliquid architecto consequatur sint rerum aliquam quibusdam cum ratione! Quidem, dignissimos!</p></div> <div id="info-foto"> <p><img src="image/farmacia.jpg" alt=""></p></div> <div id="info-direccion"> <p>' + feature.properties.CARRCADAST + ' ' + feature.properties.DOORNUM + ', ' + feature.properties.NBarri + '</p> </div> </div>';
                     layer.bindPopup(popupContent, {
-                        offset: new L.point(25,15),
+                        offset: new L.point(25, 15),
                     })//se agrego el popup de cada marker, el texto 'lorem'
                 }
-            });//se agrega el geojason
+            });//se agrega el geojason de farmacias
+            var marcadoresGeojson1 = L.geoJson(wifi, {
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, {
+                        icon: iconDefault
+                    })//se agrega los markers
+                },
+                onEachFeature: function (feature, layer) {
+                    popupContent = '<div id="info-general"> <div id="info-titulo"> <h1>' + feature.properties.NOM_CAPA + '</h1> </div> <div id="info-descripcion"> <p>'+feature.properties.EQUIPAMENT+'</p></div> <div id="info-foto"> <p><img src="image/farmacia.jpg" alt=""></p></div> <div id="info-direccion"> <p>' + feature.properties.ADRECA +  ', ' + feature.properties.NOM_BARRI + '</p> </div> </div>';
+                    layer.bindPopup(popupContent, {
+                        offset: new L.point(25, 15),
+                    })//se agrego el popup de cada marker, el texto 'lorem'
+                }
+            });//se agrega el geojason de puntos wifi
             marcadoresGeojson.on('mouseover', function (feature) {
                 feature.sourceTarget.setIcon(iconDinamic2);
             });
@@ -399,6 +416,19 @@
                 feature.sourceTarget.setIcon(iconDinamic);
             });//se escucha los eventos del mouse sobre los markers
 
+            marcadoresGeojson1.on('mouseover', function (feature) {
+                feature.sourceTarget.setIcon(iconDinamic2);
+            });
+            marcadoresGeojson1.on('mouseout', function (feature) {
+                feature.sourceTarget.setIcon(iconDefault);
+            });
+            marcadoresGeojson1.on('mousedown', function (feature) {
+                feature.sourceTarget.setIcon(iconDinamic);
+            });
+            marcadoresGeojson1.on('mouseup', function (feature) {
+                feature.sourceTarget.setIcon(iconDinamic);
+            });//se escucha los eventos del mouse sobre los markers
+
             var markers = L.markerClusterGroup({
                 animateAddingMarkers: false,
                 showCoverageOnHover: false,
@@ -406,8 +436,40 @@
             });
             markers.addLayer(marcadoresGeojson);
             map.addLayer(markers);//agrupa los markers para que la visualizacion sea mas limpia
+
+            var markers1 = L.markerClusterGroup({
+                animateAddingMarkers: false,
+                showCoverageOnHover: false,
+                zoomToBoundsOnClick: true,
+                
+            });
+            markers1.addLayer(marcadoresGeojson1);
+            //map.addLayer(markers1);
             var sidebar = L.control.sidebar('sidebar').addTo(map);// barra lateral donde aparecen detalles de la pagina
-            
+            var capaBase = {
+                "Mapbox": capa5,
+                "OSM": capa3
+            }//mapa base del layer
+            var capawifi = {
+                "Farmacias": markers,
+                "Wifi": markers1
+            };//capas del layer
+
+            var controlCapas = L.control.layers(capaBase, capawifi, {
+                collapsedAll: false,
+                hideSingleBase: true
+            });
+            controlCapas.addTo(map);//control de layers
+
+            map.on('overlayadd', function (eo) {
+                if (eo.name === 'Wifi') {
+                    setTimeout(function () { map.removeLayer(markers) }, 10);
+                } else {
+                    setTimeout(function () { map.removeLayer(markers1) }, 10);
+                }
+            });// esta función solo permite que se muestre un solo dato. Farmacias o Puntos Wifi
+
+
         }//fin del iniciarMapa
 
     </script>
@@ -433,9 +495,9 @@
             </a></div>
     </div>
     <div id="navegacion">
-        
-        <p class="nav"><a class="nav-url" href="index.html">Farmacias</a></p>
-        
+
+        <p class="nav"><a class="nav-url" href="index.html">Farmacias y Point Wifi</a></p>
+
     </div>
     <div id="estructura">
         <header>
@@ -443,7 +505,7 @@
         </header>
         <div id="seccion">
             <div id="sidebar" class="sidebar collapsed">
-                
+
                 <div class="sidebar-tabs">
                     <ul role="tablist">
                         <div>
@@ -461,7 +523,7 @@
                     </ul>
                 </div>
 
-                
+
                 <div class="sidebar-content">
                     <div class="sidebar-pane" id="home">
                         <h1 class="sidebar-header">
