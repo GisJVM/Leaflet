@@ -20,7 +20,8 @@ Se usaron los siguientes plugin:
 
 ***otros detalles***
 
-Se uso texto alternativo (Lorem Ipsum) para el contenido descriptivo de la página.
+* Se uso texto alternativo (Lorem Ipsum) para el contenido descriptivo de la página.
+* Se puso una restricción, solo se podrá ver una sola capa de información a la vez. Farmacias o puntos wifi.
 
 ***DEMO***
 
